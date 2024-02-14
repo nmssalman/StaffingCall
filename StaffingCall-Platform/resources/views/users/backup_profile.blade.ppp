@@ -1,0 +1,129 @@
+@extends('layouts.app')
+@section('content')
+
+<div class="bg-image bg-image-bottom" style="background-image: url({!! url('/assets/img/staffing.jpg') !!});">
+                    <div class="bg-primary-dark-op py-30-custom">
+                        <div class="content content-full text-center">
+                            <!-- Avatar -->
+                            <div class="mb-15">
+                                <a class="img-link" href="#">
+                                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="@if($userInfo->profilePic){!! url('public/'.$userInfo->profilePic) !!}@else {!! url('/assets/img/avatar1.jpg') !!} @endif" alt="">
+                                </a>
+                            </div>
+                            <!-- END Avatar -->
+
+                            <!-- Personal -->
+                            <h1 class="h3 text-white font-w700 mb-10">{!! $userInfo->firstName." ".$userInfo->lastName !!}
+                             <button style="cursor: pointer;" onclick="javascript:location.href='{!! url(Config('constants.urlVar.editProfile')) !!}'" type="button" class="btn btn-sm btn-alt-secondary">
+                                <i class="fa fa-edit"> Edit profile</i></button>
+                            </h1>
+                            
+                            @if(Auth::user()->role != 1)
+                            <h2 class="h5 text-white-op">
+                               Business Group - <a class="text-primary-light" href="javascript:void(0)">{!! $userInfo->groupName." (".$userInfo->groupCode.")" !!}</a>
+                             </h2>
+                            @endif
+                            <h2 class="h5 text-white-op">
+                            @if(Auth::user()->role != 1 && Auth::user()->role != 2)
+                            
+                               Business Unit - <a class="text-primary-light" href="javascript:void(0)">{!! $userInfo->unitName !!}</a>
+                           </h2>
+                            @endif                            
+                            
+                            <!-- END Personal -->
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+
+<div class="content">
+    <!-- Agency Profile -->
+<!--                    <h2 class="content-heading">
+                     
+                        <i class="si si-briefcase mr-5"></i> Agency Profile
+                    </h2>-->
+    
+<div class="block" style="border:1px solid #4ba5f5;border-radius:2px;">
+                        <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#basic-info" >Account Information</a>
+                            </li>
+                            
+                        </ul>
+                        <div class="block-content block-content-full tab-content overflow-hidden">
+                            <!-- Classic -->
+                            <div class="tab-pane fade show active" id="basic-info" role="tabpanel">
+<!--                                <div class="font-size-h3 font-w600 py-30 mb-20 text-center border-b">
+                                    <span class="text-primary font-w700">Agency</span><mark class="text-danger"> Information</mark>
+                                </div>-->
+                                <div class="row items-push">
+                                    <div class="col-lg-6">
+                                        <h4 class="h5 mb-5">
+                                            <a href="javascript:void(0)">Basic Info</a>
+                                        </h4>
+                                        
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Name : </strong> <a href="javascript:void(0)">{!! $userInfo->firstName." ".$userInfo->lastName !!}</a></em>
+                                     </div>  
+                                        
+                                    @if(Auth::user()->role != 1 && Auth::user()->role != 2)   
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Employee Skills : </strong> <a href="javascript:void(0)">
+                                                        {!! $userSkills?implode(', ',$userSkills):'Not defined'; !!}
+                                                    </a></em>
+                                     </div>  
+                                        
+                                    @endif    
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Date Joined : </strong> <a href="javascript:void(0)">{!! date("j M Y",strtotime($userInfo->created_at)) !!}</a></em>
+                                     </div> 
+                                    
+                                     @if(Auth::user()->role != 1)    
+                                    <div class="font-size-sm text-muted">
+                                         <em><strong class="font-w600">Calendar View : </strong> <a href="javascript:void(0)">{!! $userInfo->calendarView?'<span class="badge badge-success">On</span>':'<span class="badge badge-danger">Off</span>' !!}</a></em>
+                                     </div>     
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Receive App notification : </strong> <a href="javascript:void(0)">{!! $userInfo->pushNotification?'<span class="badge badge-success">On</span>':'<span class="badge badge-danger">Off</span>' !!}</a></em>
+                                     </div>     
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Receive Text notification : </strong> <a href="javascript:void(0)">{!! $userInfo->smsNotification?'<span class="badge badge-success">On</span>':'<span class="badge badge-danger">Off</span>' !!}</a></em>
+                                     </div>      
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Receive Email notification : </strong> <a href="javascript:void(0)">{!! $userInfo->emailNotification?'<span class="badge badge-success">On</span>':'<span class="badge badge-danger">Off</span>' !!}</a></em>
+                                     </div> 
+                                    
+                                    @endif  
+                                    
+                                    </div>
+                                    <div class="col-lg-6">
+                                    
+                                        <h4 class="h5 mb-5">
+                                            <a href="javascript:void(0)">Contact Info</a>
+                                        </h4>
+                                        
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Email : </strong> <a href="javascript:void(0)">{!! $userInfo->email !!}</a></em>
+                                     </div>   
+                                        
+                                     <div class="font-size-sm text-muted">
+                                                <em><strong class="font-w600">Phone : </strong> <a href="javascript:void(0)">{!! $userInfo->phone !!}</a></em>
+                                     </div>     
+                                        
+                                    
+                                    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!-- END Classic -->
+                           
+
+                        </div>
+                    </div>
+                  
+                    
+</div>
+
+<!-- container -->
+@endsection
